@@ -9,9 +9,9 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const AddRoom = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload Image");
@@ -32,18 +32,18 @@ const AddRoom = () => {
       const { data } = await axiosSecure.post(`/room`, roomData);
       return data;
     },
-    onSuccess: ()=>{
-      console.log('Data Saved Successfully')
-      toast.success('Room Added Successfully!')
-      navigate('/dashboard/my-listings')
+    onSuccess: () => {
+      console.log("Data Saved Successfully");
+      toast.success("Room Added Successfully!");
+      navigate("/dashboard/my-listings");
       setLoading(false);
-    }
+    },
   });
 
-  // Form handler 
+  // Form handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     const form = e.target;
     const location = form.location.value;
     const category = form.category.value;
@@ -83,10 +83,10 @@ const AddRoom = () => {
 
       // post request to server
 
-      await mutateAsync(roomData)
+      await mutateAsync(roomData);
     } catch (error) {
       console.log(error);
-            toast.error(error.message);
+      toast.error(error.message);
       setLoading(false);
     }
   };
