@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import RoomDataRow from "../../../components/Dashboard/TableRows/RoomDataRows";
+import toast from "react-hot-toast";
 
 const MyListings = () => {
   const { user } = useAuth();
@@ -21,10 +23,24 @@ const MyListings = () => {
     },
   });
 
+  // delete
+  const { mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      const { data } = await axiosSecure.delete(`/room/${id}`);
+      return data;
+    },
+    onSuccess: (data) => {
+      refetch();
+      toast.success("Successfully Deleted!");
+    },
+  });
   //   Handle delete
-
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = async (id) => {
+    try {
+      await mutateAsync(id);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   if (isLoading) return <LoadingSpinner />;
@@ -93,7 +109,6 @@ const MyListings = () => {
                     <RoomDataRow
                       key={room._id}
                       room={room}
-                      refetch={refetch}
                       handleDelete={handleDelete}
                     />
                   ))}
