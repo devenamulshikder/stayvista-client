@@ -23,7 +23,6 @@ const AddRoom = () => {
 
   // date range handler
   const handleDates = (item) => {
-    console.log(item);
     setDates(item.selection);
   };
 
@@ -78,8 +77,6 @@ const AddRoom = () => {
         host,
         image: image_url,
       };
-
-      console.table(roomData);
 
       // post request to server
 
