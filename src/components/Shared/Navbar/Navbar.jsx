@@ -29,7 +29,7 @@ const Navbar = () => {
       };
 
       const { data } = await axiosSecure.put(`/user`, currentUser);
-      console.log(data);
+    
       if (data.modifiedCount > 0) {
         toast.success("Success! Please wait for admin confirmation");
       } else {
@@ -64,7 +64,7 @@ const Navbar = () => {
                 <div className="hidden md:block">
                   {/* {!user && ( */}
                   <button
-                    // disabled={!user}
+                    disabled={!user}
                     onClick={() => setIsModalOpen(true)}
                     className="disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
                   >
