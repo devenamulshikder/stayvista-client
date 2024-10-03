@@ -1,10 +1,16 @@
+/* eslint-disable no-unused-vars */
+import useRole from "../../../hooks/useRole";
+import AdminStatistics from "../Admin/AdminStatistics";
 
 
 const Statistics = () => {
+    const [role, isLoading] = useRole()
     return (
-        <div>
-            <h1 className="text-3xl">Welcome to Dashboard: Statistics Page</h1>
-        </div>
+        <>
+            {
+                role === 'admin' && <AdminStatistics/>
+            }
+        </>
     );
 };
 
