@@ -13,7 +13,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Form/CheckoutForm";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
+const BookingModal = ({ closeModal, isOpen, bookingInfo, refetch }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -80,6 +80,7 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
                   {/* checkout form */}
 
                   <CheckoutForm
+                    refetch={refetch}
                     closeModal={closeModal}
                     bookingInfo={bookingInfo}
                   />
@@ -97,6 +98,7 @@ BookingModal.propTypes = {
   bookingInfo: PropTypes.object,
   closeModal: PropTypes.func,
   isOpen: PropTypes.bool,
+  refetch: PropTypes.func
 };
 
 export default BookingModal;
