@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import Button from "../Shared/Button/Button";
 import { useState } from "react";
@@ -39,7 +40,6 @@ const RoomReservation = ({ room, refetch }) => {
           rangeColors={["#F43F5E"]}
           // editableDateInputs={true}
           onChange={(item) => {
-            console.log(item);
             setState([
               {
                 startDate: new Date(room.from),

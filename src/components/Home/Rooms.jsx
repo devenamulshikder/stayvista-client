@@ -12,7 +12,6 @@ const Rooms = () => {
 
   const [params, setParams] = useSearchParams();
   const category = params.get("category");
-  console.log(category)
 
   // tanstack query
   const { data: rooms = [], isLoading } = useQuery({

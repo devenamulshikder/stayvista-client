@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 import { useState } from "react";
@@ -20,7 +21,6 @@ const BookingDataRow = ({ booking, refetch }) => {
       return data;
     },
     onSuccess: async (data) => {
-        console.log(data)
       refetch();
       toast.success("Booking Canceled!");
     //   change room booked status back to false

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./CheckoutForm.css";
 import { ImSpinner9 } from "react-icons/im";
@@ -29,7 +30,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
   //   get clientSecret
   const getClientSecret = async (price) => {
     const { data } = await axiosSecure.post(`/create-payment-intent`, price);
-    console.log("clientSecret from server--->", data);
+
     setClientSecret(data.clientSecret);
   };
 
@@ -53,12 +54,10 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
     });
 
     if (error) {
-      console.log("[error]", error);
       setCardError(error.message);
       setProcessing(false);
       return;
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
       setCardError("");
     }
 
@@ -75,14 +74,12 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
       });
 
     if (confirmError) {
-      console.log(confirmError);
       setCardError(confirmError.message);
       setProcessing(false);
       return;
     }
 
     if (paymentIntent.status === "succeeded") {
-      // console.log(paymentIntent);
       // 1. Create payment info object
       const paymentInfo = {
         ...bookingInfo,
@@ -91,23 +88,16 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
         date: new Date(),
       };
       delete paymentInfo._id;
-      // console.log(paymentInfo);
 
       try {
         // 2. save payment info in booking collection (db)
 
         const { data } = await axiosSecure.post("/booking", paymentInfo);
-        console.log(data);
-
 
         // 3. changed room status to booked in db
         await axiosSecure.patch(`/room/status/${bookingInfo?._id}`, {
           status: true,
         });
-
-
-        
-
 
         // update ui
         refetch();
@@ -115,7 +105,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
         toast.success("Room Booked Successfully");
         navigate("/dashboard/my-bookings");
       } catch (err) {
-        console.log(err);
+        toast.error(err.message);
       }
     }
     setProcessing(false);
